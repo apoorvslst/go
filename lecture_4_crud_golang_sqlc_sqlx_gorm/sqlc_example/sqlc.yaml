@@ -1,0 +1,13 @@
+version: "2"
+sql:
+  - engine: "postgresql"          # Kaunsa database engine
+    queries: "db/query/"          # SQL queries ki jagah
+    schema: "../../db/migration/" # Schema files (migration folder use karo)
+    gen:
+      go:
+        package: "db"             # Go package ka naam
+        out: "db/sqlc"            # Output folder
+        emit_json_tags: true      # JSON tags generate karo
+        emit_prepared_queries: false
+        emit_interface: false
+        emit_exact_table_names: false
