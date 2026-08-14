@@ -6,16 +6,16 @@ Is lecture mein sikhaya gaya hai ki **Go mein database se kaise baat karte hain*
 - **C**reate = Naya data daalo
 - **R**ead = Data padho
 - **U**pdate = Data badlo
-- **D**elete = Data delete karo
+- **D**elete = Data delete karo 
 
 Iske liye **3 popular tarike** hain. Video mein teeno compare kiye gaye hain:
 
-```
+``` 
 ┌─────────────────────────────────────────────────────────┐
 │                                                         │
-│   1. SQLC  → Tum SQL likho, ye Go code generate karta  │
-│   2. SQLX  → Tum SQL likho, ye struct mein map karta   │
-│   3. GORM  → Tum Go likho, ye SQL generate karta       │
+│   1. SQLC  → Tum SQL likho, ye Go code generate karta   │
+│   2. SQLX  → Tum SQL likho, ye struct mein map karta    │
+│   3. GORM  → Tum Go likho, ye SQL generate karta        │
 │                                                         │
 └─────────────────────────────────────────────────────────┘
 ```
