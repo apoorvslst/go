@@ -4,14 +4,14 @@ import (
 	"database/sql"
 	"net/http"
 
-	"github.com/gin-gonic/gin"
 	db "github.com/apoor/simple_bank/db/sqlc"
+	"github.com/gin-gonic/gin"
 )
 
 // createAccountRequest stores the input parameters for creating a new account
 type createAccountRequest struct {
 	Owner    string `json:"owner" binding:"required"`
-	Currency string `json:"currency" binding:"required,oneof=USD EUR"`
+	Currency string `json:"currency" binding:"required,currency"`
 }
 
 func (server *Server) createAccount(ctx *gin.Context) {

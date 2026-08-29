@@ -6,22 +6,28 @@ import (
 	"fmt"
 )
 
-// Store struct saari queries (individual & transaction) run karne ka method dega
-type Store struct {
+// Store provides all functions to execute db queries and transactions
+type Store interface {
+	Querier
+	TransferTx(ctx context.Context, arg TransferTxParams) (TransferTxResult, error)
+}
+
+// SQLStore provides all functions to execute SQL queries and transactions
+type SQLStore struct {
 	*Queries
 	db *sql.DB
 }
 
-// NewStore ek naya Store banata hai using sql.DB connection
-func NewStore(db *sql.DB) *Store {
-	return &Store{
+// NewStore creates a new store
+func NewStore(db *sql.DB) Store {
+	return &SQLStore{
 		db:      db,
 		Queries: New(db), // Ye default sqlc generate kiya function hai
 	}
 }
 
 // execTx ek transaction start karta hai aur callback function us transaction ke andar chalata hai
-func (store *Store) execTx(ctx context.Context, fn func(*Queries) error) error {
+func (store *SQLStore) execTx(ctx context.Context, fn func(*Queries) error) error {
 	// Pehle transaction shuru karo
 	tx, err := store.db.BeginTx(ctx, nil) // nil for default isolation level
 	if err != nil {
@@ -62,7 +68,7 @@ type TransferTxResult struct {
 }
 
 // TransferTx money transfer karta hai (ek hi transaction mein record, 2 entries, aur dono ke balance update)
-func (store *Store) TransferTx(ctx context.Context, arg TransferTxParams) (TransferTxResult, error) {
+func (store *SQLStore) TransferTx(ctx context.Context, arg TransferTxParams) (TransferTxResult, error) {
 	var result TransferTxResult
 
 	err := store.execTx(ctx, func(q *Queries) error {
